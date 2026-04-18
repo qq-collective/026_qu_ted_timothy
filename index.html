@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Timothy — なんちゃっTED #026</title>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Timothy — QU_TED Collective #026</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 :root {
   --cream: #FAF7F2;
@@ -31,23 +31,51 @@ body {
 
 /* Header */
 .site-header {
-  background: var(--warm-white);
-  border-bottom: 1px solid var(--sand);
-  padding: 1rem 2rem;
+  background: var(--ink);
   display: flex;
-  align-items: baseline;
-  gap: 12px;
+  align-items: stretch;
+  min-height: 64px;
+}
+.site-header-left {
+  background: var(--terracotta);
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.site-badge {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.65);
+  text-transform: uppercase;
 }
 .site-title {
   font-family: 'Lora', serif;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 500;
-  color: var(--ink);
+  color: #fff;
+}
+.site-header-right {
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
 }
 .site-series {
-  font-size: 12px;
-  color: var(--ink-light);
-  letter-spacing: 0.08em;
+  font-size: 10px;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.site-tagline {
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+  font-style: italic;
+  font-family: 'Lora', serif;
 }
 
 /* Main layout */
@@ -286,8 +314,14 @@ textarea { resize: vertical; line-height: 1.7; }
 <body>
 
 <header class="site-header">
-  <div class="site-title">Timothy</div>
-  <div class="site-series">なんちゃっTED #026 — 発表設計支援</div>
+  <div class="site-header-left">
+    <div class="site-badge">QU_TED Collective #026</div>
+    <div class="site-title">Timothy</div>
+  </div>
+  <div class="site-header-right">
+    <div class="site-series">発表設計支援ツール</div>
+    <div class="site-tagline">場を動かす発表の、準備を整える。</div>
+  </div>
 </header>
 
 <main class="main">
