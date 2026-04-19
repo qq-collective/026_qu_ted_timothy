@@ -68,16 +68,6 @@
 
 ---
 
-## QuestQueries について
-
-「モヤモヤを結晶化したらアプリになった」をコンセプトに、
-セナリ学院 × MASAKI が展開するAIアプリシリーズ。
-
-- GitHub: [MonoMonoMonozu](https://github.com/MonoMonoMonozu)
-- シリーズ一覧: 準備中
-
----
-
 ## バージョン
 
 | バージョン | 内容 |
