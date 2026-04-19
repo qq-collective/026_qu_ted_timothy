@@ -2,7 +2,6 @@
 
 > 英語ゼミの議論を、上流から下流まで支える5つのAI。
 
-**MASAKI'＠ScenariAcademy**｜AI協働：Claude（フェルン）/ Gemini（シュタルク）
 
 ---
 
@@ -108,10 +107,13 @@ APIキーはAnthropicコンソール（[console.anthropic.com](https://console.a
 
 ## 設計思想
 
-AIは踏み台ではなく、重力を貸してくれる存在——**スイングバイ**。
+AIは自分を拡張するツール
 
-うまく使えば、自分が思っていたより遠くに飛べる。どこに向かうかを決めるのは、参加者自身だ。
-
+パラリンピアンやトライアスロンの選手が携えている「補助具」のような存在
+自分を補うためにも、スイングバイするためにも使える相棒
 ---
 
 *QU_TED Collective｜#026–#030*
+
+**MASAKI'＠ScenariAcademy**｜AI協働：Claude（フェルン）/ Gemini（シュタルク）
+
