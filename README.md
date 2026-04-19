@@ -1,4 +1,4 @@
-# QU_TED Collective
+# QU_TED Project
 
 > 英語ゼミの議論を、上流から下流まで支える5つのAI。
 
