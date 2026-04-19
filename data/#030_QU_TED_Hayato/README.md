@@ -1,6 +1,6 @@
-# QQ30 — Logical X-Ray
+# QQ30 QU_TED_Hayato
 
-> 「この論文、何が言いたいんだろう？」を3つの推論で読み解く
+この論文、何が言いたいんだろう？」を3つの推論で読み解く
 
 **QuestQueries Series #030**
 
