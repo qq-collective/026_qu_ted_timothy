@@ -108,9 +108,9 @@ APIキーはAnthropicコンソール（[console.anthropic.com](https://console.a
 ## 設計思想
 
 AIは自分を拡張するツール
-
 パラリンピアンやトライアスロンの選手が携えている「補助具」のような存在
 自分を補うためにも、スイングバイするためにも使える相棒
+
 ---
 
 *QU_TED Collective｜#026–#030*
