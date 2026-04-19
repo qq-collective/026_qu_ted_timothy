@@ -2,7 +2,7 @@
 
 > 英語ゼミの議論を、上流から下流まで支える5つのAI。
 
-**MASAKI × セナリ学院**｜AI協働：Claude（ヘルン）/ Gemini（シュタルク）
+**MASAKI**｜AI協働：Claude（フェルン）/ Gemini（シュタルク）
 
 ---
 
