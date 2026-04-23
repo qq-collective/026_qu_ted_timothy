@@ -1,12 +1,575 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QU_TED — Dr.Mucho #029</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donovan — QU-TED #028</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  --cream: #FAF6EE;
+  --cream-dark: #F0E9D8;
+  --cream-mid: #F5EFE2;
+  --terracotta: #B85C38;
+  --terracotta-light: #E8A07A;
+  --terracotta-dark: #7A3220;
+  --ink: #2C2420;
+  --ink-mid: #5C4A3A;
+  --ink-light: #8C7A6A;
+  --sage: #6B8C72;
+  --gold: #C9942A;
+  --gold-light: #F0D898;
+  --cobalt: #3A6B99;
+  --rose: #C4506A;
+  --donovan: #2A2318;
+  --donovan-light: #8B6E3A;
+  --donovan-pale: #F5F0E8;
+  --donovan-gold: #C9942A;
+  --donovan-wood: #6B3E1A;
+  --border: rgba(92,74,58,0.18);
+  --border-strong: rgba(92,74,58,0.38);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--cream); color: var(--ink); font-family: 'Noto Sans JP', sans-serif; min-height: 100vh; }
+
+/* ── HEADER ── */
+.header {
+  background: var(--ink); padding: 16px 28px;
+  display: flex; align-items: center; gap: 14px;
+  border-bottom: 3px solid var(--donovan);
+}
+.header-eyebrow { font-size: 10px; color: var(--ink-light); letter-spacing: 0.14em; margin-bottom: 2px; }
+.header-title { font-family: 'Crimson Pro', serif; font-size: 22px; color: var(--cream); font-style: italic; }
+.header-subtitle { font-size: 11px; color: var(--ink-light); letter-spacing: 0.06em; }
+.header-ver { margin-left: auto; background: var(--donovan); color: var(--cream); font-size: 10px; padding: 3px 10px; border-radius: 2px; letter-spacing: 0.1em; }
+
+/* ── DAMIAN GREETING ── */
+.donovan-banner {
+  background: linear-gradient(135deg, #1C1710 0%, #2A2318 60%, #3D2E14 100%);
+  padding: 18px 28px; display: flex; align-items: flex-start; gap: 14px;
+  border-bottom: 2px solid var(--donovan-gold);
+}
+.donovan-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; border: 2px solid rgba(255,255,255,0.3); }
+.donovan-speech { flex: 1; }
+.donovan-name { font-family: 'Crimson Pro', serif; font-size: 13px; color: rgba(255,255,255,0.55); font-style: italic; margin-bottom: 4px; letter-spacing: 0.06em; }
+.donovan-text { font-size: 13px; color: white; line-height: 1.65; }
+.phase-tags { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.phase-tag { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 2px; padding: 4px 10px; font-size: 11px; color: rgba(255,255,255,0.85); display: flex; align-items: center; gap: 6px; }
+.phase-tag-num { font-family: 'Crimson Pro', serif; font-size: 14px; font-style: italic; color: rgba(255,255,255,0.45); }
+
+/* ── PHASE INDICATOR ── */
+.phase-bar { background: var(--cream-dark); border-bottom: 1px solid var(--border); padding: 10px 28px; display: flex; align-items: center; gap: 16px; }
+.phase-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--ink-light); }
+.phase-item.active { color: var(--donovan); font-weight: 500; }
+.phase-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border-strong); }
+.phase-item.active .phase-dot { background: var(--donovan); }
+.phase-item.done .phase-dot { background: var(--sage); }
+.phase-item.done { color: var(--sage); }
+.phase-sep { color: var(--border-strong); font-size: 10px; }
+
+/* ── WRAP ── */
+.wrap { max-width: 860px; margin: 0 auto; padding: 24px 20px 72px; }
+
+/* ── API ROW ── */
+.api-row { display: flex; align-items: center; gap: 10px; margin-bottom: 22px; background: white; border: 1px solid var(--border); border-radius: 4px; padding: 10px 14px; }
+.api-row label { font-size: 12px; color: var(--ink-mid); white-space: nowrap; }
+.api-row input { flex: 1; border: none; background: transparent; font-size: 13px; color: var(--ink); font-family: 'Noto Sans JP', sans-serif; outline: none; }
+
+/* ── CARD ── */
+.card { background: white; border: 1px solid var(--border); border-radius: 4px; padding: 20px; margin-bottom: 16px; }
+.card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.card-num { font-family: 'Crimson Pro', serif; font-size: 12px; color: var(--donovan); font-weight: 600; letter-spacing: 0.06em; }
+.card-title { font-size: 14px; font-weight: 500; }
+.card-title-en { font-family: 'Crimson Pro', serif; font-size: 12px; color: var(--ink-light); font-style: italic; margin-left: 6px; }
+.field-label { font-size: 11px; color: var(--ink-mid); margin-bottom: 6px; }
+
+textarea, input[type="password"] { width: 100%; border: 1px solid var(--border-strong); border-radius: 3px; padding: 9px 11px; font-family: 'Noto Sans JP', sans-serif; font-size: 13.5px; color: var(--ink); background: var(--cream); resize: vertical; transition: border-color 0.2s, background 0.2s; line-height: 1.6; }
+textarea:focus, input:focus { outline: none; border-color: var(--donovan-light); background: white; }
+
+/* ── BUTTONS ── */
+.run-btn { background: var(--donovan); color: white; border: none; border-radius: 3px; padding: 13px 28px; font-size: 14px; font-family: 'Noto Sans JP', sans-serif; font-weight: 500; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; letter-spacing: 0.04em; }
+.run-btn:hover { background: #1C1710; }
+.run-btn:disabled { background: var(--ink-light); cursor: not-allowed; }
+.run-btn.phase2 { background: var(--terracotta); }
+.run-btn.phase2:hover { background: var(--terracotta-dark); }
+
+.sub-btn { background: none; border: 1px solid var(--border-strong); border-radius: 3px; padding: 9px 18px; font-size: 12px; color: var(--ink-mid); cursor: pointer; font-family: 'Noto Sans JP', sans-serif; transition: all 0.18s; }
+.sub-btn:hover { border-color: var(--donovan-light); color: var(--donovan); }
+
+.add-btn { background: none; border: 1px dashed var(--border-strong); border-radius: 3px; padding: 6px; width: 100%; font-size: 11px; color: var(--ink-light); cursor: pointer; transition: all 0.18s; font-family: 'Noto Sans JP', sans-serif; margin-top: 4px; }
+.add-btn:hover { border-color: var(--donovan-light); color: var(--donovan); background: var(--donovan-pale); }
+
+.reset-btn { background: none; border: 1px solid var(--border-strong); border-radius: 3px; padding: 9px 20px; font-size: 12px; color: var(--ink-mid); cursor: pointer; font-family: 'Noto Sans JP', sans-serif; transition: all 0.18s; display: block; margin: 0 auto; }
+.reset-btn:hover { border-color: var(--terracotta-light); color: var(--terracotta); }
+
+/* ── SPINNER ── */
+.spinner { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-area { text-align: center; padding: 56px; color: var(--ink-light); }
+.big-spinner { width: 32px; height: 32px; border: 3px solid var(--cream-dark); border-top-color: var(--donovan); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 14px; }
+.loading-label { font-size: 13px; letter-spacing: 0.06em; }
+
+/* ── LIVE PHASE ── */
+.spark-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+.spark-card { background: var(--donovan-pale); border: 1px solid rgba(107,62,26,0.2); border-radius: 4px; padding: 12px 15px; display: flex; align-items: flex-start; gap: 10px; }
+.spark-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.spark-text { font-size: 13.5px; line-height: 1.65; color: var(--ink-mid); flex: 1; }
+.spark-en { font-family: 'Crimson Pro', serif; font-size: 15px; color: var(--donovan-wood); font-style: italic; display: block; margin-top: 4px; }
+
+.talk-row { display: flex; gap: 6px; align-items: flex-start; margin-bottom: 6px; }
+.talk-name { width: 72px; min-width: 72px; font-size: 12px; padding: 8px 6px; min-height: 44px; resize: none; text-align: center; }
+.talk-row textarea { min-height: 44px; font-size: 13px; }
+
+/* ── ARCHIVE RESULTS ── */
+.result-block { margin-bottom: 28px; }
+.result-eyebrow { font-size: 10px; letter-spacing: 0.12em; color: var(--ink-light); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.result-eyebrow::after { content:''; flex:1; height:1px; background:var(--border); }
+
+.magazine-header { border-bottom: 2px solid var(--ink); padding-bottom: 12px; margin-bottom: 16px; }
+.magazine-label { font-size: 10px; letter-spacing: 0.2em; color: var(--ink-light); margin-bottom: 4px; }
+.magazine-title { font-family: 'Crimson Pro', serif; font-size: 26px; color: var(--ink); line-height: 1.3; }
+.magazine-subtitle { font-family: 'Crimson Pro', serif; font-size: 15px; color: var(--ink-mid); font-style: italic; margin-top: 4px; }
+.magazine-meta { font-size: 11px; color: var(--ink-light); margin-top: 8px; display: flex; gap: 14px; }
+
+.scene-block { margin-bottom: 18px; padding: 14px 16px; border-radius: 4px; background: white; border: 1px solid var(--border); }
+.scene-label { font-size: 10px; letter-spacing: 0.1em; color: var(--ink-light); margin-bottom: 8px; }
+.scene-text { font-size: 13.5px; line-height: 1.8; color: var(--ink-mid); }
+
+.quote-block { margin: 14px 0; padding: 12px 18px; border-left: 3px solid var(--donovan); background: var(--donovan-pale); border-radius: 0 4px 4px 0; }
+.quote-name { font-size: 10px; color: var(--donovan-light); letter-spacing: 0.06em; margin-bottom: 4px; }
+.quote-ja { font-size: 13.5px; line-height: 1.7; color: var(--ink-mid); }
+.quote-en { font-family: 'Crimson Pro', serif; font-size: 15px; color: var(--donovan); font-style: italic; margin-top: 6px; line-height: 1.5; }
+
+.takeaway-box { background: var(--ink); color: var(--cream); border-radius: 4px; padding: 16px 20px; margin-bottom: 10px; }
+.takeaway-label { font-size: 10px; letter-spacing: 0.14em; color: var(--ink-light); margin-bottom: 8px; }
+.takeaway-text { font-family: 'Crimson Pro', serif; font-size: 18px; font-style: italic; line-height: 1.55; }
+
+.next-q-list { display: flex; flex-direction: column; gap: 8px; }
+.next-q { background: var(--cream-dark); border-radius: 3px; padding: 10px 14px; font-family: 'Crimson Pro', serif; font-size: 15px; font-style: italic; color: var(--ink-mid); line-height: 1.55; }
+
+.error-box { background: #FBF0EE; border: 1px solid var(--terracotta-light); border-radius: 3px; padding: 11px 14px; font-size: 13px; color: var(--terracotta-dark); margin-bottom: 14px; }
+.hidden { display: none; }
+
+@media (max-width: 600px) {
+  .phase-bar { flex-wrap: wrap; }
+}
+</style>
 </head>
 <body>
-  <p>Dr.Mucho (#029) — 準備中</p>
-  <p><a href="../../README.md">← トップに戻る</a></p>
+
+<div class="header">
+  <div>
+    <div class="header-eyebrow">QU-TED #028</div>
+    <div class="header-title">Donovan</div>
+    <div class="header-subtitle">議論のアーカイバー — The Session Bassist</div>
+  </div>
+  <div class="header-ver">v2.0</div>
+</div>
+
+<div class="donovan-banner">
+  <div class="donovan-avatar">🎸</div>
+  <div class="donovan-speech">
+    <div class="donovan-name">Donovan</div>
+    <div class="donovan-text">Good. Let's keep this moving.<br>
+    Elice laid out the map. Now we play — any language, any tempo.<br>
+    I'll handle the archive when the session's done.</div>
+    <div class="phase-tags">
+      <div class="phase-tag"><span class="phase-tag-num">1</span> LIVE — 議論をファシリテート</div>
+      <div class="phase-tag"><span class="phase-tag-num">2</span> ARCHIVE — セッションを記録する</div>
+    </div>
+  </div>
+</div>
+
+<div class="phase-bar" id="phaseBar">
+  <div class="phase-item active" id="phaseItem1"><div class="phase-dot"></div>SETUP</div>
+  <div class="phase-sep">›</div>
+  <div class="phase-item" id="phaseItem2"><div class="phase-dot"></div>LIVE</div>
+  <div class="phase-sep">›</div>
+  <div class="phase-item" id="phaseItem3"><div class="phase-dot"></div>ARCHIVE</div>
+</div>
+
+<div class="wrap">
+
+  <div class="api-row">
+    <label>API Key</label>
+    <input type="password" id="apiKey" placeholder="sk-ant-…">
+  </div>
+
+  <!-- ═══ PHASE 1: SETUP ═══ -->
+  <div id="setupSection">
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-num">INPUT 01</div>
+        <div class="card-title">発表のお題<span class="card-title-en">Topic</span></div>
+      </div>
+      <div class="field-label">タイトル・要旨・キーワードを貼ってください</div>
+      <textarea id="topic" rows="3" placeholder="例：ターナーの「liminality」概念について。通過儀礼における「境界」の状態がテーマ。"></textarea>
+    </div>
+
+    <div class="card">
+      <div class="card-head">
+        <div class="card-num">INPUT 02</div>
+        <div class="card-title">Eliceのマトリックス<span class="card-title-en">From Elice</span></div>
+      </div>
+      <div class="field-label">Eliceが出した「Eliceの読み取り」をコピペしてください（テンション・空白の問いも含めて）</div>
+      <textarea id="eliceMatrix" rows="6" placeholder="例）&#10;First Impressions: 参加者の多くが「境界」という概念の曖昧さに興味を持った。&#10;Agree Points: フィールドワークの具体例が印象的だった点で一致。&#10;Another Opinions: 「liminality」が現代社会でどう使えるかへの疑問が多い。&#10;テンション: 理論の精緻さへの評価 vs 現代的応用への関心&#10;空白の問い: この概念は日本の通過儀礼にも適用できるのか？"></textarea>
+    </div>
+
+    <div class="error-box hidden" id="setupError"></div>
+
+    <button class="run-btn" id="setupBtn" onclick="startLive()">
+      <span id="setupLabel">議論の火種を出す →</span>
+    </button>
+
+  </div>
+
+  <!-- ═══ LOADING 1 ═══ -->
+  <div id="loadingLive" class="hidden">
+    <div class="loading-area">
+      <div class="big-spinner"></div>
+      <div class="loading-label" id="loadingLiveLabel">Eliceのマトリックスを読んでいます…</div>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 2: LIVE ═══ -->
+  <div id="liveSection" class="hidden">
+
+    <!-- Sparks -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-num">DONOVAN</div>
+        <div class="card-title">議論の火種<span class="card-title-en">Sparks</span></div>
+      </div>
+      <div class="field-label" style="margin-bottom:12px;">このマトリックスから、Donovanが面白そうな問いを3つ出しました。スクリーンに映して話し合いましょう。</div>
+      <div class="spark-list" id="sparkList"></div>
+    </div>
+
+    <!-- Free talk log -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-num">INPUT 03</div>
+        <div class="card-title">ディスカッションの文字起こし<span class="card-title-en">Transcript</span></div>
+      </div>
+      <div class="field-label" style="margin-bottom:10px;">ZoomやTeamsの文字起こしをそのまま貼り付けてください（整形不要）</div>
+      <textarea id="transcript" rows="12" placeholder="例）&#10;高倉：liminality って結局どこにでも当てはまる概念じゃないですか？&#10;田中：でもそれって概念が強いってことだよね。&#10;Takakura: I think the concept is too abstract to apply directly.&#10;..."></textarea>
+      <div style="font-size:11px; color:var(--ink-light); margin-top:6px;">※ 文字起こしがない場合は空欄のままでもアーカイブを生成できます</div>
+    </div>
+
+    <div class="error-box hidden" id="liveError"></div>
+
+    <button class="run-btn phase2" id="archiveBtn" onclick="startArchive()">
+      <span>今日の議論をアーカイブする →</span>
+    </button>
+
+  </div>
+
+  <!-- ═══ LOADING 2 ═══ -->
+  <div id="loadingArchive" class="hidden">
+    <div class="loading-area">
+      <div class="big-spinner"></div>
+      <div class="loading-label" id="loadingArchiveLabel">今日の議論を編集しています…</div>
+    </div>
+  </div>
+
+  <!-- ═══ PHASE 3: ARCHIVE ═══ -->
+  <div id="archiveSection" class="hidden">
+
+    <div class="result-block">
+      <div class="result-eyebrow">今日の記録</div>
+      <div class="card">
+        <div class="magazine-header">
+          <div class="magazine-label">SEMINAR ARCHIVE</div>
+          <div class="magazine-title" id="archiveTitle"></div>
+          <div class="magazine-subtitle" id="archiveSubtitle"></div>
+          <div class="magazine-meta" id="archiveMeta"></div>
+        </div>
+
+        <div id="archiveScenes"></div>
+
+        <div id="archiveQuotes"></div>
+
+      </div>
+    </div>
+
+    <div class="result-block">
+      <div class="result-eyebrow">今日のまとめ</div>
+      <div id="archiveTakeaway"></div>
+    </div>
+
+    <div class="result-block">
+      <div class="result-eyebrow">次回への問い</div>
+      <div class="card">
+        <div class="next-q-list" id="archiveNextQ"></div>
+      </div>
+    </div>
+
+    <button class="reset-btn" onclick="doReset()">← 最初からやり直す</button>
+
+  </div>
+
+</div>
+
+<script>
+// ── Phase indicator ──
+function setPhase(phase) {
+  ['phaseItem1','phaseItem2','phaseItem3'].forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.classList.remove('active','done');
+    if (i + 1 < phase) el.classList.add('done');
+    else if (i + 1 === phase) el.classList.add('active');
+  });
+}
+
+// ── Transcript ──
+function getTalkLog() {
+  return document.getElementById('transcript').value.trim();
+}
+
+// ── Loading ──
+function startLoadingWith(labelId, msgs) {
+  let i = 0;
+  document.getElementById(labelId).textContent = msgs[0];
+  return setInterval(() => {
+    i = (i + 1) % msgs.length;
+    document.getElementById(labelId).textContent = msgs[i];
+  }, 1800);
+}
+
+// ── PHASE 1 → LIVE ──
+let sparksData = [];
+let liveTimer;
+
+async function startLive() {
+  const apiKey = document.getElementById('apiKey').value.trim();
+  if (!apiKey) { showError('setupError','APIキーを入力してください。'); return; }
+  const topic = document.getElementById('topic').value.trim();
+  if (!topic) { showError('setupError','発表のお題を入力してください。'); return; }
+  const eliceMatrix = document.getElementById('eliceMatrix').value.trim();
+  if (!eliceMatrix) { showError('setupError','Eliceのマトリックスを入力してください。'); return; }
+
+  hideError('setupError');
+  document.getElementById('setupSection').classList.add('hidden');
+  document.getElementById('loadingLive').classList.remove('hidden');
+  document.getElementById('setupBtn').disabled = true;
+
+  liveTimer = startLoadingWith('loadingLiveLabel', [
+    'Eliceのマトリックスを読んでいます…',
+    '面白い対立軸を探しています…',
+    '議論の火種を準備しています…',
+  ]);
+
+  const systemPrompt = `あなたはゼミ議論ファシリテーターAI「Donovan」です。
+Eliceが作ったマトリックスを受け取り、フリートークを活性化する「議論の火種」を3つ生成してください。
+JSONのみで回答（Markdownなし、コードフェンスなし）。
+
+{
+  "sparks": [
+    {
+      "icon": "絵文字1つ",
+      "ja": "日本語で投げかける問い・視点（1〜2文）",
+      "en": "English version of the same spark (natural spoken English)"
+    },
+    { "icon": "...", "ja": "...", "en": "..." },
+    { "icon": "...", "ja": "...", "en": "..." }
+  ]
+}
+
+火種は「答えを求めない」「意見が分かれそう」「その場の誰かが話せそう」なものを選んでください。`;
+
+  const userPrompt = `【発表のお題】\n${topic}\n\n【Eliceのマトリックス】\n${eliceMatrix}\n\nJSONのみで回答してください。`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userPrompt }]
+      })
+    });
+
+    if (!res.ok) { const err = await res.json(); throw new Error(err.error?.message || `API error ${res.status}`); }
+    const data = await res.json();
+    const text = data.content.map(b => b.text || '').join('');
+    const clean = text.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+    clearInterval(liveTimer);
+    sparksData = parsed.sparks;
+    renderSparks(parsed.sparks);
+    document.getElementById('loadingLive').classList.add('hidden');
+    document.getElementById('liveSection').classList.remove('hidden');
+    setPhase(2);
+
+  } catch (e) {
+    clearInterval(liveTimer);
+    document.getElementById('loadingLive').classList.add('hidden');
+    document.getElementById('setupSection').classList.remove('hidden');
+    document.getElementById('setupBtn').disabled = false;
+    showError('setupError', 'エラー: ' + e.message);
+  }
+}
+
+function renderSparks(sparks) {
+  const list = document.getElementById('sparkList');
+  list.innerHTML = '';
+  sparks.forEach(s => {
+    const div = document.createElement('div');
+    div.className = 'spark-card';
+    div.innerHTML = `
+      <div class="spark-icon">${esc(s.icon)}</div>
+      <div class="spark-text">
+        ${esc(s.ja)}
+        <span class="spark-en">"${esc(s.en)}"</span>
+      </div>`;
+    list.appendChild(div);
+  });
+}
+
+// ── PHASE 2 → ARCHIVE ──
+let archiveTimer;
+
+async function startArchive() {
+  const apiKey = document.getElementById('apiKey').value.trim();
+  if (!apiKey) { showError('liveError','APIキーを入力してください。'); return; }
+
+  const topic = document.getElementById('topic').value.trim();
+  const eliceMatrix = document.getElementById('eliceMatrix').value.trim();
+  const sparksText = sparksData.map((s,i) => `火種${i+1}: ${s.ja}`).join('\n');
+  const talkText = getTalkLog() || '（文字起こしなし）';
+
+  hideError('liveError');
+  document.getElementById('liveSection').classList.add('hidden');
+  document.getElementById('loadingArchive').classList.remove('hidden');
+
+  archiveTimer = startLoadingWith('loadingArchiveLabel', [
+    '今日の議論を編集しています…',
+    '発言を英語に変換しています…',
+    '記事の構成を組み立てています…',
+    'Donovanが仕上げています…',
+  ]);
+
+  const systemPrompt = `あなたはゼミ議論アーカイブ編集者AI「Donovan」です。
+今日のゼミセッション全体を受け取り、雑誌記事風のアーカイブを生成してください。
+JSONのみで回答（Markdownなし、コードフェンスなし）。
+
+{
+  "title": "今日のセッションを表す日本語タイトル（20字以内）",
+  "subtitle": "English subtitle (evocative, magazine-style)",
+  "meta": "参加人数・主なテーマ・雰囲気を一言で（例：8名 / 概念と現実のあいだ / 白熱）",
+  "scenes": [
+    {
+      "label": "場面ラベル（例：OPENING / TENSION / TURNING POINT）",
+      "text": "その場面の描写（3〜4文）"
+    }
+  ],
+  "quotes": [
+    {
+      "name": "発言者名",
+      "ja": "印象的な発言（日本語）",
+      "en": "English translation or equivalent (natural spoken English)"
+    }
+  ],
+  "takeaway": "今日の議論から浮かび上がった一番大事なこと（Crimson Pro体で映える1〜2文）",
+  "next_questions": [
+    "次回持ち越したい問い（英語で、自然な疑問文）",
+    "次回持ち越したい問い（英語で）",
+    "次回持ち越したい問い（英語で）"
+  ]
+}
+
+発言録がない場合は、マトリックスと火種から推測して記事を構成してください。
+英語訳は日本語話者がそのまま読める自然な英語で。`;
+
+  const userPrompt = `【お題】\n${topic}\n\n【Eliceのマトリックス】\n${eliceMatrix}\n\n【議論の火種（Donovan提示）】\n${sparksText}\n\n【フリートークの発言録】\n${talkText}\n\nJSONのみで回答してください。`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userPrompt }]
+      })
+    });
+
+    if (!res.ok) { const err = await res.json(); throw new Error(err.error?.message || `API error ${res.status}`); }
+    const data = await res.json();
+    const text = data.content.map(b => b.text || '').join('');
+    const clean = text.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+    clearInterval(archiveTimer);
+    renderArchive(parsed);
+    document.getElementById('loadingArchive').classList.add('hidden');
+    document.getElementById('archiveSection').classList.remove('hidden');
+    setPhase(3);
+
+  } catch (e) {
+    clearInterval(archiveTimer);
+    document.getElementById('loadingArchive').classList.add('hidden');
+    document.getElementById('liveSection').classList.remove('hidden');
+    showError('liveError', 'エラー: ' + e.message);
+  }
+}
+
+function renderArchive(d) {
+  document.getElementById('archiveTitle').textContent = d.title || '';
+  document.getElementById('archiveSubtitle').textContent = d.subtitle || '';
+  document.getElementById('archiveMeta').textContent = d.meta || '';
+
+  const scenes = document.getElementById('archiveScenes');
+  scenes.innerHTML = (d.scenes || []).map(s => `
+    <div class="scene-block">
+      <div class="scene-label">${esc(s.label)}</div>
+      <div class="scene-text">${esc(s.text)}</div>
+    </div>`).join('');
+
+  const quotes = document.getElementById('archiveQuotes');
+  quotes.innerHTML = (d.quotes || []).map(q => `
+    <div class="quote-block">
+      <div class="quote-name">${esc(q.name)}</div>
+      <div class="quote-ja">${esc(q.ja)}</div>
+      <div class="quote-en">"${esc(q.en)}"</div>
+    </div>`).join('');
+
+  document.getElementById('archiveTakeaway').innerHTML = d.takeaway ? `
+    <div class="takeaway-box">
+      <div class="takeaway-label">TODAY'S TAKEAWAY</div>
+      <div class="takeaway-text">${esc(d.takeaway)}</div>
+    </div>` : '';
+
+  document.getElementById('archiveNextQ').innerHTML = (d.next_questions || []).map(q => `
+    <div class="next-q">"${esc(q)}"</div>`).join('');
+}
+
+function doReset() {
+  document.getElementById('archiveSection').classList.add('hidden');
+  document.getElementById('liveSection').classList.add('hidden');
+  document.getElementById('setupSection').classList.remove('hidden');
+  document.getElementById('setupBtn').disabled = false;
+  document.getElementById('transcript').value = '';
+  setPhase(1);
+}
+
+function showError(id, msg) { const b = document.getElementById(id); b.textContent = msg; b.classList.remove('hidden'); }
+function hideError(id) { document.getElementById(id).classList.add('hidden'); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+</script>
 </body>
 </html>
