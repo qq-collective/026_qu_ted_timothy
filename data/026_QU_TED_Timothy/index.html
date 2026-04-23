@@ -1,12 +1,536 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QU_TED — Timothy #026</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timothy — なんちゃっTED #026</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FAF7F2;
+  --warm-white: #FFFCF7;
+  --sand: #E8E0D4;
+  --terracotta: #C4704A;
+  --terracotta-light: #F0E0D6;
+  --terracotta-dark: #8B4A2E;
+  --forest: #4A6741;
+  --forest-light: #D8E6D4;
+  --ink: #1E1A16;
+  --ink-mid: #5A524A;
+  --ink-light: #9A8E84;
+  --gold: #C4922A;
+  --gold-light: #F5EDD4;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+/* Header */
+.site-header {
+  background: var(--warm-white);
+  border-bottom: 1px solid var(--sand);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+.site-title {
+  font-family: 'Lora', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.site-series {
+  font-size: 12px;
+  color: var(--ink-light);
+  letter-spacing: 0.08em;
+}
+
+/* Main layout */
+.main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* API key */
+.apikey-bar {
+  background: var(--gold-light);
+  border: 1px solid #E0C878;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 1.5rem;
+}
+.apikey-bar label { font-size: 12px; color: var(--gold); white-space: nowrap; font-weight: 500; }
+.apikey-bar input {
+  flex: 1;
+  font-size: 13px;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  outline: none;
+  font-family: monospace;
+}
+
+/* Input card */
+.input-card {
+  background: var(--warm-white);
+  border: 1px solid var(--sand);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.input-row {
+  display: grid;
+  grid-template-columns: 1fr 160px 160px;
+  gap: 12px;
+  margin-bottom: 1rem;
+}
+.field-label {
+  font-size: 11px;
+  color: var(--ink-light);
+  margin-bottom: 5px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+input[type="text"], select, textarea {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  padding: 9px 12px;
+  border: 1px solid var(--sand);
+  border-radius: 8px;
+  background: var(--cream);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s;
+}
+input[type="text"]:focus, select:focus, textarea:focus {
+  border-color: var(--terracotta);
+}
+textarea { resize: vertical; line-height: 1.7; }
+.gen-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 11px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  background: var(--terracotta);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background 0.15s, transform 0.1s;
+}
+.gen-btn:hover { background: var(--terracotta-dark); }
+.gen-btn:active { transform: scale(0.99); }
+.gen-btn:disabled { background: var(--ink-light); cursor: not-allowed; }
+
+/* Output grid */
+.output-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+/* Output cards */
+.output-card {
+  background: var(--warm-white);
+  border: 1px solid var(--sand);
+  border-radius: 14px;
+  padding: 1.25rem;
+  min-height: 200px;
+}
+.card-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--sand);
+}
+.card-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.icon-left { background: var(--terracotta-light); color: var(--terracotta-dark); }
+.icon-right { background: var(--forest-light); color: var(--forest); }
+.card-title { font-size: 13px; font-weight: 500; color: var(--ink); }
+.card-sub { font-size: 11px; color: var(--ink-light); margin-top: 1px; }
+
+/* Skeleton / loading */
+.skeleton-line {
+  height: 12px;
+  background: linear-gradient(90deg, var(--sand) 25%, var(--cream) 50%, var(--sand) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* Script blocks */
+.script-block { margin-bottom: 16px; }
+.script-tag {
+  display: inline-block;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+}
+.tag-section { background: var(--terracotta-light); color: var(--terracotta-dark); }
+.tag-term { background: var(--gold-light); color: var(--gold); }
+.script-en { font-size: 13px; line-height: 1.75; color: var(--ink); font-family: 'Lora', serif; }
+.script-ja { font-size: 12px; line-height: 1.7; color: var(--ink-light); margin-top: 4px; }
+
+/* Term badges */
+.terms-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.term-pill {
+  font-size: 11px;
+  background: var(--gold-light);
+  color: var(--gold);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.term-note { font-size: 11px; color: var(--ink-light); margin-top: 8px; line-height: 1.6; }
+
+/* Question items */
+.question-item {
+  border-left: 2px solid var(--forest-light);
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  transition: border-color 0.15s;
+}
+.question-item:hover { border-color: var(--forest); }
+.q-label {
+  font-size: 10px;
+  color: var(--forest);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.q-text { font-size: 13px; line-height: 1.65; color: var(--ink); }
+.q-hint { font-size: 11px; color: var(--ink-light); margin-top: 5px; font-style: italic; }
+
+/* Memo area */
+.memo-area {
+  margin-top: 14px;
+  padding: 10px;
+  background: var(--forest-light);
+  border-radius: 8px;
+}
+.memo-label { font-size: 10px; color: var(--forest); font-weight: 500; margin-bottom: 6px; }
+.memo-input {
+  width: 100%;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--ink);
+  resize: none;
+  line-height: 1.6;
+}
+
+/* Empty state */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  color: var(--ink-light);
+  text-align: center;
+}
+.empty-icon { font-size: 28px; margin-bottom: 10px; opacity: 0.5; }
+.empty-text { font-size: 13px; line-height: 1.6; }
+
+/* Error */
+.error-box {
+  background: #FDF0F0;
+  border: 1px solid #E8B4B4;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #8B2020;
+  margin-top: 10px;
+}
+
+@media (max-width: 640px) {
+  .output-grid { grid-template-columns: 1fr; }
+  .input-row { grid-template-columns: 1fr; }
+}
+</style>
 </head>
 <body>
-  <p>Timothy (#026) — 準備中</p>
-  <p><a href="../../README.md">← トップに戻る</a></p>
+
+<header class="site-header">
+  <div class="site-title">Timothy</div>
+  <div class="site-series">なんちゃっTED #026 — 発表設計支援</div>
+</header>
+
+<main class="main">
+
+  <!-- API Key -->
+  <div class="apikey-bar">
+    <label>API Key</label>
+    <input type="password" id="apiKey" placeholder="sk-ant-..." />
+  </div>
+
+  <!-- Input -->
+  <div class="input-card">
+    <div class="input-row">
+      <div>
+        <div class="field-label">発表タイトル</div>
+        <input type="text" id="title" placeholder="例）Ritual Practices in Highland Communities" />
+      </div>
+      <div>
+        <div class="field-label">発表時間</div>
+        <select id="duration">
+          <option value="3">3分</option>
+          <option value="5" selected>5分</option>
+          <option value="10">10分</option>
+        </select>
+      </div>
+      <div>
+        <div class="field-label">対象聴衆</div>
+        <select id="audience">
+          <option value="seminar">ゼミメンバー</option>
+          <option value="academic">学会・研究者</option>
+          <option value="mixed">混在</option>
+        </select>
+      </div>
+    </div>
+    <div>
+      <div class="field-label">要旨・スライド内容（日本語でも英語でも）</div>
+      <textarea id="abstract" rows="6" placeholder="研究の内容、スライドの見出し、箇条書きなど何でも貼り付けてください。AIが発表の骨格と問いかけを提案します。"></textarea>
+    </div>
+    <button class="gen-btn" id="genBtn" onclick="generate()">
+      <span id="btnText">発表骨格と問いを出す</span>
+    </button>
+    <div id="errorBox" style="display:none"></div>
+  </div>
+
+  <!-- Output -->
+  <div class="output-grid">
+    <div class="output-card">
+      <div class="card-header">
+        <div class="card-icon icon-left">T</div>
+        <div>
+          <div class="card-title">発表骨格（草案）</div>
+          <div class="card-sub">自分の言葉に直して使ってください</div>
+        </div>
+      </div>
+      <div id="scriptOutput">
+        <div class="empty-state">
+          <div class="empty-icon">📄</div>
+          <div class="empty-text">要旨を入力して生成すると<br>TED風の発表骨格が出てきます</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="output-card">
+      <div class="card-header">
+        <div class="card-icon icon-right">?</div>
+        <div>
+          <div class="card-title">登壇者への問いかけ</div>
+          <div class="card-sub">答えをメモしながら発表に組み込んで</div>
+        </div>
+      </div>
+      <div id="questionsOutput">
+        <div class="empty-state">
+          <div class="empty-icon">💬</div>
+          <div class="empty-text">生成後、あなた自身への<br>問いかけが出てきます</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+async function generate() {
+  const apiKey = document.getElementById('apiKey').value.trim();
+  const title = document.getElementById('title').value.trim();
+  const abstract = document.getElementById('abstract').value.trim();
+  const duration = document.getElementById('duration').value;
+  const audience = document.getElementById('audience').value;
+  const errorBox = document.getElementById('errorBox');
+  const btn = document.getElementById('genBtn');
+  const btnText = document.getElementById('btnText');
+
+  errorBox.style.display = 'none';
+
+  if (!apiKey) { showError('APIキーを入力してください。'); return; }
+  if (!abstract) { showError('要旨またはスライド内容を入力してください。'); return; }
+
+  btn.disabled = true;
+  btnText.textContent = '生成中...';
+  showSkeleton();
+
+  const audienceLabel = { seminar: 'ゼミメンバー（専門知識あり）', academic: '学会・研究者', mixed: '専門家と非専門家が混在' }[audience];
+
+  const systemPrompt = `あなたは大学ゼミの英語発表を支援するコーチです。
+学生が研究内容を「読み上げ」ではなく「場を動かすコミュニケーション」として発表できるよう、TED風の発表骨格と登壇者への問いかけを提案します。
+
+以下のルールを守ってください：
+- 完成原稿ではなく「草案・骨格」として出す
+- 英語スクリプトには必ず日本語訳を添える
+- 専門用語は抽出し、初出時の説明方法を提案する
+- 登壇者への問いかけは4つ：なぜこれを選んだ／一番伝えたいこと／弱点・反論／ウェルカムな質問
+- 各問いかけには「→ 発表への活かし方」のヒントを添える
+
+必ず以下のJSON形式のみで返答してください（マークダウン不要）：
+{
+  "script": [
+    {"section": "Hook", "en": "英語テキスト", "ja": "日本語訳"},
+    {"section": "Why it matters", "en": "英語テキスト", "ja": "日本語訳"},
+    {"section": "Main point", "en": "英語テキスト", "ja": "日本語訳"},
+    {"section": "Closing", "en": "英語テキスト", "ja": "日本語訳"}
+  ],
+  "terms": [
+    {"word": "専門用語", "suggestion": "初出時の説明方法"}
+  ],
+  "questions": [
+    {"label": "なぜこれを選んだ？", "question": "問いかけ文", "hint": "発表への活かし方"},
+    {"label": "一番伝えたいことは？", "question": "問いかけ文", "hint": "発表への活かし方"},
+    {"label": "弱点・反論は？", "question": "問いかけ文", "hint": "発表への活かし方"},
+    {"label": "ウェルカムな質問は？", "question": "問いかけ文", "hint": "発表への活かし方"}
+  ]
+}`;
+
+  const userPrompt = `発表タイトル：${title || '（未入力）'}
+発表時間：${duration}分
+対象聴衆：${audienceLabel}
+
+要旨・スライド内容：
+${abstract}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 2000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userPrompt }]
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error?.message || `HTTP ${res.status}`);
+    }
+
+    const data = await res.json();
+    const text = data.content[0].text.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(text);
+    renderOutput(parsed);
+
+  } catch (e) {
+    showError('エラーが発生しました：' + e.message);
+    resetOutput();
+  } finally {
+    btn.disabled = false;
+    btnText.textContent = '発表骨格と問いを出す';
+  }
+}
+
+function renderOutput(data) {
+  // Script
+  const scriptEl = document.getElementById('scriptOutput');
+  let scriptHTML = '';
+  data.script.forEach(block => {
+    scriptHTML += `
+      <div class="script-block">
+        <span class="script-tag tag-section">${block.section}</span>
+        <div class="script-en">${block.en}</div>
+        <div class="script-ja">（${block.ja}）</div>
+      </div>`;
+  });
+
+  if (data.terms && data.terms.length > 0) {
+    scriptHTML += `<div class="script-block">
+      <span class="script-tag tag-term">専門用語の扱い方</span>
+      <div class="terms-row">`;
+    data.terms.forEach(t => {
+      scriptHTML += `<span class="term-pill">${t.word}</span>`;
+    });
+    scriptHTML += `</div>`;
+    if (data.terms[0]) {
+      scriptHTML += `<div class="term-note">→ ${data.terms[0].suggestion}</div>`;
+    }
+    scriptHTML += `</div>`;
+  }
+  scriptEl.innerHTML = scriptHTML;
+
+  // Questions
+  const qEl = document.getElementById('questionsOutput');
+  let qHTML = '';
+  data.questions.forEach(q => {
+    qHTML += `
+      <div class="question-item">
+        <div class="q-label">${q.label}</div>
+        <div class="q-text">${q.question}</div>
+        <div class="q-hint">→ ${q.hint}</div>
+      </div>`;
+  });
+  qHTML += `
+    <div class="memo-area">
+      <div class="memo-label">あなたのメモ（自分の言葉で書き込んでください）</div>
+      <textarea class="memo-input" rows="3" placeholder="ここに自分の答えをメモしておくと発表準備に使えます..."></textarea>
+    </div>`;
+  qEl.innerHTML = qHTML;
+}
+
+function showSkeleton() {
+  const skel = `<div class="skeleton-line" style="width:60%"></div>
+    <div class="skeleton-line" style="width:100%"></div>
+    <div class="skeleton-line" style="width:90%"></div>
+    <div class="skeleton-line" style="width:40%;margin-top:16px"></div>
+    <div class="skeleton-line" style="width:100%"></div>
+    <div class="skeleton-line" style="width:80%"></div>`;
+  document.getElementById('scriptOutput').innerHTML = skel;
+  document.getElementById('questionsOutput').innerHTML = skel;
+}
+
+function resetOutput() {
+  document.getElementById('scriptOutput').innerHTML = `<div class="empty-state"><div class="empty-icon">📄</div><div class="empty-text">要旨を入力して生成すると<br>TED風の発表骨格が出てきます</div></div>`;
+  document.getElementById('questionsOutput').innerHTML = `<div class="empty-state"><div class="empty-icon">💬</div><div class="empty-text">生成後、あなた自身への<br>問いかけが出てきます</div></div>`;
+}
+
+function showError(msg) {
+  const errorBox = document.getElementById('errorBox');
+  errorBox.innerHTML = `<div class="error-box">${msg}</div>`;
+  errorBox.style.display = 'block';
+}
+</script>
 </body>
 </html>
