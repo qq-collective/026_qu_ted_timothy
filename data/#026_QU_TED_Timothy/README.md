@@ -1,4 +1,4 @@
-# QU_TED_Timothy｜#026
+# QU_TED_Timothy｜026
 
 ## これは何？
 
