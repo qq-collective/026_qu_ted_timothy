@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QU_TED Project</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Crimson+Pro:ital,wght@0,300;0,600;1,300&display=swap');
+
+  :root {
+    --bg: #f0ede6;
+    --paper: #fdfcfa;
+    --ink: #111010;
+    --faint: #b8b4ac;
+    --accent: #9a8260;
+    --dedu: #1a1a1a;
+    --indu: #4a4a4a;
+    --abdu: #8a7560;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Noto Serif JP', serif;
+    min-height: 100vh;
+    padding: 60px 20px 100px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .kigo {
+    font-family: 'Crimson Pro', serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--faint);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  h1 {
+    font-size: clamp(24px, 5vw, 38px);
+    font-weight: 300;
+    letter-spacing: 3px;
+    line-height: 1.4;
+  }
+
+  h1 span {
+    display: block;
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 0.55em;
+    color: var(--accent);
+    letter-spacing: 1px;
+    margin-top: 8px;
+  }
+
+  .tagline {
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--faint);
+    font-weight: 300;
+    letter-spacing: 1px;
+    line-height: 1.8;
+  }
+
+  /* flow diagram */
+  .flow {
+    max-width: 680px;
+    margin: 0 auto 64px;
+    background: var(--paper);
+    border-radius: 6px;
+    padding: 28px 32px;
+    border-top: 3px solid var(--accent);
+  }
+
+  .flow-label {
+    font-family: 'Crimson Pro', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .flow-diagram {
+    font-family: 'Crimson Pro', serif;
+    font-size: 13px;
+    color: var(--faint);
+    line-height: 2.2;
+    letter-spacing: 1px;
+  }
+
+  .flow-diagram strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  /* member cards */
+  .members {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .member-card {
+    background: var(--paper);
+    border-radius: 6px;
+    padding: 28px 24px;
+    border-top: 3px solid var(--faint);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s, transform 0.5s, box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .member-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .member-card:hover {
+    box-shadow: 0 6px 24px rgba(0,0,0,0.09);
+    border-top-color: var(--accent);
+  }
+
+  .member-num {
+    font-family: 'Crimson Pro', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--faint);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .member-name {
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .member-role {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  .member-desc {
+    font-size: 12px;
+    line-height: 1.9;
+    color: #5a5248;
+    font-weight: 300;
+  }
+
+  .member-timing {
+    margin-top: 16px;
+    font-size: 11px;
+    color: var(--faint);
+    letter-spacing: 1px;
+    text-align: right;
+    font-family: 'Crimson Pro', serif;
+  }
+
+  /* philosophy */
+  .philosophy {
+    max-width: 680px;
+    margin: 64px auto 0;
+    text-align: center;
+  }
+
+  .philosophy-line {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: clamp(15px, 2.5vw, 18px);
+    color: var(--accent);
+    line-height: 1.8;
+    letter-spacing: 0.5px;
+  }
+
+  .philosophy-sub {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--faint);
+    letter-spacing: 2px;
+    font-weight: 300;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 80px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--faint);
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="kigo">QuestQueries — #026–030</div>
+  <h1>QU_TED Project<span>英語ゼミの議論を、上流から下流まで支える5つのAI。</span></h1>
+  <p class="tagline">
+    どれか1つから始めていい。——バンドは、いつでも待っている。
+  </p>
+</header>
+
+<div class="flow">
+  <div class="flow-label">使う流れ</div>
+  <div class="flow-diagram">
+    ゼミ前 &nbsp;→&nbsp; <strong>隼人 #030</strong><br>
+    登壇前 &nbsp;→&nbsp; <strong>Timothy #026</strong><br>
+    発表後 &nbsp;→&nbsp; <strong>Elice #027</strong><br>
+    議論中 &nbsp;→&nbsp; <strong>Donovan #028</strong><br>
+    いつでも &nbsp;→&nbsp; <strong>Dr. Mucho #029</strong>
+  </div>
+</div>
+
+<div class="members" id="members">
+
+  <a class="member-card" href="./data/026_QU_TED_Timothy/">
+    <div class="member-num">#026</div>
+    <div class="member-name">Timothy</div>
+    <div class="member-role">発表準備・骨格設計</div>
+    <div class="member-desc">要旨やスライドを入力すると、TED風の発表骨格と「登壇者への4つの問い」を生成。「正しく読み上げる」から「場を動かすために話す」への転換を支援する。</div>
+    <div class="member-timing">登壇前 →</div>
+  </a>
+
+  <a class="member-card" href="./data/027_QU_TED_Elice/">
+    <div class="member-num">#027</div>
+    <div class="member-name">Elice</div>
+    <div class="member-role">聴衆の声の可視化</div>
+    <div class="member-desc">発表後、聴衆の声を3カテゴリで収集しマトリックスに整理。「あなたへの質問攻め」を「みんなの地図」に変える。誰が何を感じたかが見えるから、議論が始まる。</div>
+    <div class="member-timing">発表直後 →</div>
+  </a>
+
+  <a class="member-card" href="./data/028_QU_TED_Donovan/">
+    <div class="member-num">#028</div>
+    <div class="member-name">Donovan</div>
+    <div class="member-role">議論の記録・アーカイブ</div>
+    <div class="member-desc">フリートークをZoom/Teams文字起こしごと受け取って記録。「今は弱くていい。積み重ねが資産になる」設計。後から振り返ったとき意味があったとわかる記録を残す。</div>
+    <div class="member-timing">フリートーク中〜後 →</div>
+  </a>
+
+  <a class="member-card" href="./data/029_QU_TED_Dr.Mucho/">
+    <div class="member-num">#029</div>
+    <div class="member-name">Dr. Mucho</div>
+    <div class="member-role">概念の血肉化・用語の読み合わせ</div>
+    <div class="member-desc">「この用語、なんか引っかかる」を持ち込むと、日本語・英語・例え話の3カテゴリで言い換え候補を展開。チームで「これがわかった！」を探すゲーム型ツール。</div>
+    <div class="member-timing">いつでも →</div>
+  </a>
+
+  <a class="member-card" href="./data/030_QU_TED_Hayato/">
+    <div class="member-num">#030</div>
+    <div class="member-name">隼人</div>
+    <div class="member-role">論文読解・推論スタイルの発見</div>
+    <div class="member-desc">論文の一節を貼り付けると、演繹・帰納・アブダクションの3つの推論方式で同時に分解。どの読み方を選ぶかで、自分の思考スタイルが見えてくる。</div>
+    <div class="member-timing">ゼミ前の予習 →</div>
+  </a>
+
+</div>
+
+<div class="philosophy">
+  <div class="philosophy-line">
+    AIは踏み台ではなく、重力を貸してくれる存在——スイングバイ。<br>
+    うまく使えば、自分が思っていたより遠くに飛べる。
+  </div>
+  <div class="philosophy-sub">どこに向かうかを決めるのは、参加者自身だ。</div>
+</div>
+
+<footer>QU_TED Project｜#026–#030 &nbsp;/&nbsp; MASAKI × セナリ学院</footer>
+
+<script>
+  // staggered card reveal
+  const cards = document.querySelectorAll('.member-card');
+  setTimeout(() => {
+    cards.forEach((card, i) => {
+      setTimeout(() => card.classList.add('visible'), i * 120);
+    });
+  }, 200);
+</script>
+
+</body>
+</html>
