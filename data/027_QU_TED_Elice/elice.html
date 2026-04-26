@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elice — なんちゃっTED</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+
+:root {
+  --cream: #FAF6EE;
+  --cream-dark: #F0E9D8;
+  --cream-mid: #F5EFE2;
+  --terracotta: #B85C38;
+  --terracotta-light: #E8A07A;
+  --terracotta-dark: #7A3220;
+  --ink: #2C2420;
+  --ink-mid: #5C4A3A;
+  --ink-light: #8C7A6A;
+  --sage: #6B8C72;
+  --gold: #C9942A;
+  --gold-light: #F0D898;
+  --cobalt: #3A6B99;
+  --rose: #C4506A;
+  --border: rgba(92,74,58,0.18);
+  --border-strong: rgba(92,74,58,0.38);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: 'Noto Sans JP', sans-serif;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--ink);
+  padding: 16px 28px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-bottom: 3px solid var(--terracotta);
+}
+.header-eyebrow { font-size: 10px; color: var(--ink-light); letter-spacing: 0.14em; margin-bottom: 2px; }
+.header-title {
+  font-family: 'Crimson Pro', serif;
+  font-size: 22px;
+  color: var(--cream);
+  font-style: italic;
+  font-weight: 400;
+}
+.header-subtitle { font-size: 11px; color: var(--ink-light); letter-spacing: 0.06em; }
+.header-ver {
+  margin-left: auto;
+  background: var(--terracotta);
+  color: var(--cream);
+  font-size: 10px;
+  padding: 3px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.1em;
+}
+
+/* ── ELICE GREETING ── */
+.elice-banner {
+  background: linear-gradient(135deg, #3A6B99 0%, #2a5280 100%);
+  padding: 18px 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.elice-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--cream);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+.elice-speech { flex: 1; }
+.elice-name { font-family: 'Crimson Pro', serif; font-size: 13px; color: rgba(255,255,255,0.6); font-style: italic; margin-bottom: 4px; letter-spacing: 0.06em; }
+.elice-text { font-size: 13px; color: white; line-height: 1.65; }
+.elice-steps { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+.elice-step {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 2px;
+  padding: 4px 10px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.85);
+  display: flex; align-items: center; gap: 6px;
+}
+.elice-step-num { font-family: 'Crimson Pro', serif; font-size: 14px; font-style: italic; color: rgba(255,255,255,0.5); }
+
+/* ── WRAP ── */
+.wrap { max-width: 860px; margin: 0 auto; padding: 24px 20px 72px; }
+
+/* ── API ROW ── */
+.api-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 22px;
+  background: white; border: 1px solid var(--border);
+  border-radius: 4px; padding: 10px 14px;
+}
+.api-row label { font-size: 12px; color: var(--ink-mid); white-space: nowrap; }
+.api-row input {
+  flex: 1; border: none; background: transparent;
+  font-size: 13px; color: var(--ink);
+  font-family: 'Noto Sans JP', sans-serif; outline: none;
+}
+
+/* ── CARD ── */
+.card {
+  background: white; border: 1px solid var(--border);
+  border-radius: 4px; padding: 20px; margin-bottom: 16px;
+}
+.card-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.card-num { font-family: 'Crimson Pro', serif; font-size: 12px; color: var(--terracotta); font-weight: 600; letter-spacing: 0.06em; }
+.card-title { font-size: 14px; font-weight: 500; }
+.card-title-en { font-family: 'Crimson Pro', serif; font-size: 12px; color: var(--ink-light); font-style: italic; margin-left: 6px; }
+.field-label { font-size: 11px; color: var(--ink-mid); margin-bottom: 6px; }
+
+textarea, input[type="password"] {
+  width: 100%; border: 1px solid var(--border-strong);
+  border-radius: 3px; padding: 9px 11px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 13.5px; color: var(--ink); background: var(--cream);
+  resize: vertical; transition: border-color 0.2s, background 0.2s;
+  line-height: 1.6;
+}
+textarea:focus, input:focus {
+  outline: none; border-color: var(--terracotta-light); background: white;
+}
+
+/* ── VOICE INPUT ── */
+.voice-section { margin-bottom: 10px; }
+.category-block { margin-bottom: 14px; }
+.category-head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 8px;
+}
+.category-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.dot-impression { background: var(--cobalt); }
+.dot-agree { background: var(--sage); }
+.dot-another { background: var(--rose); }
+.category-label { font-size: 12px; font-weight: 500; }
+.category-label-en { font-family: 'Crimson Pro', serif; font-size: 11px; color: var(--ink-light); font-style: italic; margin-left: 4px; }
+.category-hint { font-size: 11px; color: var(--ink-light); margin-left: auto; }
+
+.voice-list { display: flex; flex-direction: column; gap: 6px; }
+.voice-row { display: flex; gap: 6px; align-items: flex-start; }
+.voice-name {
+  width: 72px; min-width: 72px; font-size: 12px;
+  padding: 8px 6px; min-height: 44px; resize: none;
+  text-align: center;
+}
+.voice-row textarea { min-height: 44px; font-size: 13px; }
+
+.add-btn {
+  background: none; border: 1px dashed var(--border-strong);
+  border-radius: 3px; padding: 6px; width: 100%;
+  font-size: 11px; color: var(--ink-light); cursor: pointer;
+  transition: all 0.18s; font-family: 'Noto Sans JP', sans-serif;
+  margin-top: 4px;
+}
+.add-btn:hover { border-color: var(--terracotta-light); color: var(--terracotta); background: var(--cream-dark); }
+
+/* ── BUTTONS ── */
+.run-btn {
+  background: var(--terracotta); color: white; border: none;
+  border-radius: 3px; padding: 13px 28px; font-size: 14px;
+  font-family: 'Noto Sans JP', sans-serif; font-weight: 500;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; width: 100%; letter-spacing: 0.04em;
+}
+.run-btn:hover { background: var(--terracotta-dark); }
+.run-btn:disabled { background: var(--ink-light); cursor: not-allowed; }
+.spinner { width: 15px; height: 15px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.reset-btn {
+  background: none; border: 1px solid var(--border-strong); border-radius: 3px;
+  padding: 9px 20px; font-size: 12px; color: var(--ink-mid); cursor: pointer;
+  font-family: 'Noto Sans JP', sans-serif; transition: all 0.18s;
+  display: block; margin: 0 auto;
+}
+.reset-btn:hover { border-color: var(--terracotta-light); color: var(--terracotta); }
+
+/* ── LOADING ── */
+.loading-area { text-align: center; padding: 56px; color: var(--ink-light); }
+.big-spinner { width: 32px; height: 32px; border: 3px solid var(--cream-dark); border-top-color: var(--terracotta); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 14px; }
+.loading-label { font-size: 13px; letter-spacing: 0.06em; }
+
+/* ── MATRIX RESULTS ── */
+.result-block { margin-bottom: 28px; }
+.result-eyebrow {
+  font-size: 10px; letter-spacing: 0.12em; color: var(--ink-light);
+  margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+}
+.result-eyebrow::after { content:''; flex:1; height:1px; background:var(--border); }
+
+/* Matrix header */
+.matrix-wrap { overflow-x: auto; }
+.matrix-table { width: 100%; border-collapse: collapse; }
+.matrix-table th, .matrix-table td {
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  font-size: 13px;
+  vertical-align: top;
+  line-height: 1.6;
+}
+.matrix-table th {
+  background: var(--cream-dark);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--ink-mid);
+  text-align: left;
+}
+.col-name { width: 80px; }
+.col-impression { background: rgba(58,107,153,0.04); }
+.col-agree { background: rgba(107,140,114,0.04); }
+.col-another { background: rgba(196,80,106,0.04); }
+.th-impression { color: var(--cobalt) !important; }
+.th-agree { color: var(--sage) !important; }
+.th-another { color: var(--rose) !important; }
+.name-cell { font-weight: 500; font-size: 12px; color: var(--ink-mid); text-align: center; }
+.voice-cell { color: var(--ink-mid); }
+.voice-cell.empty { color: var(--ink-light); font-style: italic; font-size: 12px; }
+
+/* AI Summary section */
+.summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+.summary-col { border-radius: 4px; padding: 12px 14px; }
+.summary-col.impression { background: rgba(58,107,153,0.06); border: 1px solid rgba(58,107,153,0.2); }
+.summary-col.agree { background: rgba(107,140,114,0.06); border: 1px solid rgba(107,140,114,0.2); }
+.summary-col.another { background: rgba(196,80,106,0.06); border: 1px solid rgba(196,80,106,0.2); }
+.summary-col-label { font-size: 10px; font-weight: 500; letter-spacing: 0.08em; margin-bottom: 6px; }
+.impression .summary-col-label { color: var(--cobalt); }
+.agree .summary-col-label { color: var(--sage); }
+.another .summary-col-label { color: var(--rose); }
+.summary-col-text { font-size: 13px; line-height: 1.7; color: var(--ink-mid); }
+
+.tension-box {
+  border-radius: 4px; padding: 13px 16px; margin-bottom: 10px;
+  background: var(--gold-light); border: 1px solid var(--gold);
+}
+.tension-label { font-size: 10px; font-weight: 500; color: var(--gold); letter-spacing: 0.08em; margin-bottom: 6px; }
+.tension-text { font-size: 13.5px; line-height: 1.7; color: var(--ink-mid); }
+
+.blank-box {
+  border-radius: 4px; padding: 13px 16px; margin-bottom: 10px;
+  background: rgba(58,107,153,0.05); border: 1px solid rgba(58,107,153,0.2);
+}
+.blank-label { font-size: 10px; font-weight: 500; color: var(--cobalt); letter-spacing: 0.08em; margin-bottom: 6px; }
+.blank-text { font-size: 13.5px; line-height: 1.7; color: var(--ink-mid); }
+
+/* Next hint */
+.next-hint {
+  background: var(--ink); color: var(--cream);
+  border-radius: 4px; padding: 14px 18px;
+  display: flex; align-items: flex-start; gap: 12px; margin-bottom: 20px;
+}
+.next-hint-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.next-hint-label { font-family: 'Crimson Pro', serif; font-size: 11px; color: var(--ink-light); font-style: italic; margin-bottom: 4px; letter-spacing: 0.06em; }
+.next-hint-text { font-size: 13px; line-height: 1.65; }
+
+.error-box { background: #FBF0EE; border: 1px solid var(--terracotta-light); border-radius: 3px; padding: 11px 14px; font-size: 13px; color: var(--terracotta-dark); margin-bottom: 14px; }
+.hidden { display: none; }
+
+@media (max-width: 600px) {
+  .summary-grid { grid-template-columns: 1fr; }
+  .elice-steps { flex-direction: column; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-eyebrow">なんちゃっTED — Part 2</div>
+    <div class="header-title">Elice</div>
+    <div class="header-subtitle">聴衆の声を受け止めて、議論を可視化する</div>
+  </div>
+  <div class="header-ver">v1.0</div>
+</div>
+
+<div class="elice-banner">
+  <div class="elice-avatar">💬</div>
+  <div class="elice-speech">
+    <div class="elice-name">Elice</div>
+    <div class="elice-text">Hey everyone! Did you catch any new impressions from the presentation?<br>
+    My job is to help bring your voices into the room — in any language. Let's go!</div>
+    <div class="elice-steps">
+      <div class="elice-step"><span class="elice-step-num">1</span> First impressions</div>
+      <div class="elice-step"><span class="elice-step-num">2</span> Agree points</div>
+      <div class="elice-step"><span class="elice-step-num">3</span> Another opinions</div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <div class="api-row">
+    <label>API Key</label>
+    <input type="password" id="apiKey" placeholder="sk-ant-…">
+  </div>
+
+  <div id="inputSection">
+
+    <!-- TOPIC -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-num">INPUT 01</div>
+        <div class="card-title">発表のお題<span class="card-title-en">Topic</span></div>
+      </div>
+      <div class="field-label">タイトル・要旨・キーワードを貼ってください</div>
+      <textarea id="topic" rows="3" placeholder="例：ターナーの「liminality」概念について。通過儀礼における「境界」の状態がテーマ。"></textarea>
+    </div>
+
+    <!-- VOICES -->
+    <div class="card">
+      <div class="card-head">
+        <div class="card-num">INPUT 02</div>
+        <div class="card-title">みんなの声<span class="card-title-en">Voices</span></div>
+      </div>
+      <div class="field-label" style="margin-bottom:14px;">参加者ごとに、3つのカテゴリで声を入力してください（空欄OK）</div>
+
+      <div class="voice-section">
+
+        <!-- IMPRESSION -->
+        <div class="category-block">
+          <div class="category-head">
+            <div class="category-dot dot-impression"></div>
+            <div class="category-label">First Impressions<span class="category-label-en"> — 最初に思ったこと</span></div>
+            <div class="category-hint">感想・驚き・疑問、なんでも</div>
+          </div>
+          <div class="voice-list" id="listImpression">
+            <div class="voice-row">
+              <textarea class="voice-name" placeholder="名前" rows="2"></textarea>
+              <textarea placeholder="最初に思ったこと、感じたこと…" rows="2"></textarea>
+            </div>
+            <div class="voice-row">
+              <textarea class="voice-name" placeholder="名前" rows="2"></textarea>
+              <textarea placeholder="最初に思ったこと、感じたこと…" rows="2"></textarea>
+            </div>
+          </div>
+          <button class="add-btn" onclick="addRow('listImpression','最初に思ったこと、感じたこと…')">＋ 追加</button>
+        </div>
+
+        <!-- AGREE -->
+        <div class="category-block">
+          <div class="category-head">
+            <div class="category-dot dot-agree"></div>
+            <div class="category-label">Agree Points<span class="category-label-en"> — 同意・共感</span></div>
+            <div class="category-hint">納得した点、賛成できる部分</div>
+          </div>
+          <div class="voice-list" id="listAgree">
+            <div class="voice-row">
+              <textarea class="voice-name" placeholder="名前" rows="2"></textarea>
+              <textarea placeholder="うなずいた点、共感できた部分…" rows="2"></textarea>
+            </div>
+            <div class="voice-row">
+              <textarea class="voice-name" placeholder="名前" rows="2"></textarea>
+              <textarea placeholder="うなずいた点、共感できた部分…" rows="2"></textarea>
+            </div>
+          </div>
+          <button class="add-btn" onclick="addRow('listAgree','うなずいた点、共感できた部分…')">＋ 追加</button>
+        </div>
+
+        <!-- ANOTHER -->
+        <div class="category-block">
+          <div class="category-head">
+            <div class="category-dot dot-another"></div>
+            <div class="category-label">Another Opinions<span class="category-label-en"> — 別の見方・疑問</span></div>
+            <div class="category-hint">違和感・反論・追加で聞きたいこと</div>
+          </div>
+          <div class="voice-list" id="listAnother">
+            <div class="voice-row">
+              <textarea class="voice-name" placeholder="名前" rows="2"></textarea>
+              <textarea placeholder="ちょっと待って…と思った点、聞いてみたいこと…" rows="2"></textarea>
+            </div>
+            <div class="voice-row">
+              <textarea class="voice-name" placeholder="名前" rows="2"></textarea>
+              <textarea placeholder="ちょっと待って…と思った点、聞いてみたいこと…" rows="2"></textarea>
+            </div>
+          </div>
+          <button class="add-btn" onclick="addRow('listAnother','ちょっと待って…と思った点、聞いてみたいこと…')">＋ 追加</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="error-box hidden" id="errorBox"></div>
+
+    <button class="run-btn" id="runBtn" onclick="analyze()">
+      <span id="runLabel">みんなの声をマトリックスに整理する</span>
+    </button>
+
+  </div>
+
+  <!-- LOADING -->
+  <div id="loadingSection" class="hidden">
+    <div class="loading-area">
+      <div class="big-spinner"></div>
+      <div class="loading-label" id="loadingLabel">みんなの声を読んでいます…</div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="resultSection" class="hidden">
+
+    <!-- Matrix table -->
+    <div class="result-block">
+      <div class="result-eyebrow">声のマトリックス</div>
+      <div class="card" style="padding: 0; overflow: hidden;">
+        <div class="matrix-wrap">
+          <table class="matrix-table" id="matrixTable">
+            <thead>
+              <tr>
+                <th class="col-name">名前</th>
+                <th class="th-impression">💬 First Impressions</th>
+                <th class="th-agree">✓ Agree Points</th>
+                <th class="th-another">↔ Another Opinions</th>
+              </tr>
+            </thead>
+            <tbody id="matrixBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI Summary -->
+    <div class="result-block">
+      <div class="result-eyebrow">Eliceの読み取り</div>
+      <div class="summary-grid" id="summaryGrid"></div>
+      <div id="tensionBox"></div>
+      <div id="blankBox"></div>
+    </div>
+
+    <!-- Next hint for Damian -->
+    <div id="nextHint" class="next-hint">
+      <div class="next-hint-icon">→</div>
+      <div>
+        <div class="next-hint-label">Next: Damian</div>
+        <div class="next-hint-text" id="nextHintText"></div>
+      </div>
+    </div>
+
+    <button class="reset-btn" onclick="doReset()">← 最初からやり直す</button>
+
+  </div>
+
+</div>
+
+<script>
+function addRow(listId, placeholder) {
+  const list = document.getElementById(listId);
+  const row = document.createElement('div');
+  row.className = 'voice-row';
+  row.innerHTML = `<textarea class="voice-name" placeholder="名前" rows="2"></textarea><textarea placeholder="${placeholder}" rows="2"></textarea>`;
+  list.appendChild(row);
+  row.querySelector('textarea:last-child').focus();
+}
+
+function getVoices(listId) {
+  const rows = document.querySelectorAll(`#${listId} .voice-row`);
+  const result = [];
+  rows.forEach((row, i) => {
+    const name = row.querySelector('.voice-name').value.trim();
+    const content = row.querySelector('textarea:last-child').value.trim();
+    if (name || content) result.push({ name: name || `参加者${i+1}`, content });
+  });
+  return result;
+}
+
+function getAllNames() {
+  const sets = ['listImpression','listAgree','listAnother'];
+  const names = new Set();
+  sets.forEach(id => {
+    document.querySelectorAll(`#${id} .voice-row`).forEach((row, i) => {
+      const n = row.querySelector('.voice-name').value.trim();
+      if (n) names.add(n);
+      else {
+        // check if any content exists
+        const c = row.querySelector('textarea:last-child').value.trim();
+        if (c) names.add(`参加者${i+1}`);
+      }
+    });
+  });
+  return [...names];
+}
+
+function getVoiceMap() {
+  // returns { name: { impression, agree, another } }
+  const map = {};
+  const lists = [
+    { id: 'listImpression', key: 'impression' },
+    { id: 'listAgree', key: 'agree' },
+    { id: 'listAnother', key: 'another' },
+  ];
+  lists.forEach(({ id, key }) => {
+    document.querySelectorAll(`#${id} .voice-row`).forEach((row, i) => {
+      const n = row.querySelector('.voice-name').value.trim();
+      const c = row.querySelector('textarea:last-child').value.trim();
+      if (!n && !c) return;
+      const name = n || `参加者${i+1}`;
+      if (!map[name]) map[name] = { impression: '', agree: '', another: '' };
+      if (c) map[name][key] = c;
+    });
+  });
+  return map;
+}
+
+const loadingMsgs = [
+  'みんなの声を読んでいます…',
+  '共通点を探しています…',
+  '違いをマッピングしています…',
+  'Eliceが整理しています…',
+];
+let loadingTimer;
+function startLoading() {
+  let i = 0;
+  document.getElementById('loadingLabel').textContent = loadingMsgs[0];
+  loadingTimer = setInterval(() => {
+    i = (i + 1) % loadingMsgs.length;
+    document.getElementById('loadingLabel').textContent = loadingMsgs[i];
+  }, 1800);
+}
+function stopLoading() { clearInterval(loadingTimer); }
+
+async function analyze() {
+  const apiKey = document.getElementById('apiKey').value.trim();
+  if (!apiKey) { showError('APIキーを入力してください。'); return; }
+  const topic = document.getElementById('topic').value.trim();
+  if (!topic) { showError('発表のお題を入力してください。'); return; }
+
+  const voiceMap = getVoiceMap();
+  if (Object.keys(voiceMap).length === 0) { showError('参加者の声を1件以上入力してください。'); return; }
+
+  hideError();
+  document.getElementById('inputSection').classList.add('hidden');
+  document.getElementById('loadingSection').classList.remove('hidden');
+  document.getElementById('runBtn').disabled = true;
+  startLoading();
+
+  // Build text for API
+  const voiceLines = Object.entries(voiceMap).map(([name, v]) => {
+    const parts = [];
+    if (v.impression) parts.push(`  First impression: ${v.impression}`);
+    if (v.agree) parts.push(`  Agree: ${v.agree}`);
+    if (v.another) parts.push(`  Another opinion: ${v.another}`);
+    return `[${name}]\n${parts.join('\n')}`;
+  }).join('\n\n');
+
+  const systemPrompt = `あなたはゼミの議論ファシリテーターAI「Elice」です。
+発表後の聴衆の声（First Impressions / Agree Points / Another Opinions）を分析し、JSONのみで回答してください（Markdownなし、コードフェンスなし）。
+
+{
+  "summary": {
+    "impression": "First Impressionsの全体的な傾向（2文以内）",
+    "agree": "Agree Pointsで共通して挙がった点（2文以内）",
+    "another": "Another Opinionsに見られる関心・疑問の傾向（2文以内）"
+  },
+  "tension": "Agree側とAnother側の間にある最も面白い対立軸・テンション（2〜3文）",
+  "blank": "誰もまだ触れていない論点・問い（1〜2文）",
+  "damian_hint": "この議論を英語で続けるとしたら、最初に投げかけるべき一言（英語で。自然な話し言葉で）"
+}`;
+
+  const userPrompt = `【発表のお題】\n${topic}\n\n【参加者の声】\n${voiceLines}\n\nJSONのみで回答してください。`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userPrompt }]
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error?.message || `API error ${res.status}`);
+    }
+
+    const data = await res.json();
+    const text = data.content.map(b => b.text || '').join('');
+    const clean = text.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+    stopLoading();
+    renderResults(voiceMap, parsed);
+
+  } catch (e) {
+    stopLoading();
+    document.getElementById('loadingSection').classList.add('hidden');
+    document.getElementById('inputSection').classList.remove('hidden');
+    document.getElementById('runBtn').disabled = false;
+    showError('エラー: ' + e.message);
+  }
+}
+
+function renderResults(voiceMap, ai) {
+  document.getElementById('loadingSection').classList.add('hidden');
+  document.getElementById('resultSection').classList.remove('hidden');
+
+  // Matrix table
+  const tbody = document.getElementById('matrixBody');
+  tbody.innerHTML = '';
+  Object.entries(voiceMap).forEach(([name, v]) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="name-cell">${esc(name)}</td>
+      <td class="voice-cell col-impression">${v.impression ? esc(v.impression) : '<span class="empty">—</span>'}</td>
+      <td class="voice-cell col-agree">${v.agree ? esc(v.agree) : '<span class="empty">—</span>'}</td>
+      <td class="voice-cell col-another">${v.another ? esc(v.another) : '<span class="empty">—</span>'}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // AI Summary grid
+  const sg = document.getElementById('summaryGrid');
+  sg.innerHTML = `
+    <div class="summary-col impression">
+      <div class="summary-col-label">FIRST IMPRESSIONS</div>
+      <div class="summary-col-text">${esc(ai.summary.impression)}</div>
+    </div>
+    <div class="summary-col agree">
+      <div class="summary-col-label">AGREE POINTS</div>
+      <div class="summary-col-text">${esc(ai.summary.agree)}</div>
+    </div>
+    <div class="summary-col another">
+      <div class="summary-col-label">ANOTHER OPINIONS</div>
+      <div class="summary-col-text">${esc(ai.summary.another)}</div>
+    </div>
+  `;
+
+  document.getElementById('tensionBox').innerHTML = ai.tension ? `
+    <div class="tension-box">
+      <div class="tension-label">テンション（見えてきた対立軸）</div>
+      <div class="tension-text">${esc(ai.tension)}</div>
+    </div>` : '';
+
+  document.getElementById('blankBox').innerHTML = ai.blank ? `
+    <div class="blank-box">
+      <div class="blank-label">まだ誰も触れていない問い</div>
+      <div class="blank-text">${esc(ai.blank)}</div>
+    </div>` : '';
+
+  document.getElementById('nextHintText').textContent = ai.damian_hint || '';
+}
+
+function doReset() {
+  document.getElementById('resultSection').classList.add('hidden');
+  document.getElementById('inputSection').classList.remove('hidden');
+  document.getElementById('runBtn').disabled = false;
+}
+
+function showError(msg) {
+  const b = document.getElementById('errorBox');
+  b.textContent = msg; b.classList.remove('hidden');
+}
+function hideError() { document.getElementById('errorBox').classList.add('hidden'); }
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+</script>
+</body>
+</html>
